@@ -5,6 +5,10 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
                 $scope.employees = response;
             });
 
+    //Reset modal form
+   $scope.FromReset = function(){
+        $('.modal-body').find("input,textarea,select").val('').end();
+   }
     //show modal form
     $scope.toggle = function (modalstate, id) {
         $scope.modalstate = modalstate;
@@ -32,7 +36,6 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
     //save new record / update existing record
     $scope.save = function (modalstate, id) {
         var url = API_URL + "employees";
-
         //append employee id to the URL if the form is in edit mode
         if (modalstate === 'edit') {
             url += "/" + id;
@@ -46,17 +49,19 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
         }).success(function (response) {
             console.log(response);
             $('#myModal').modal('hide');
+            $('.modal-body').find("input,textarea,select").val('').end();
             $http.get(API_URL + "employees")
                     .success(function (response) {
                         $scope.employees = response;
                     });
-
+//            $scope.employee.empty();
 //            location.reload();
         }).error(function (response) {
             console.log(response);
             alert('This is embarassing. An error has occured. Please check the log for details');
         });
     }
+
 
     //delete record
     $scope.confirmDelete = function (id) {
@@ -65,8 +70,7 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
             $http({
                 method: 'DELETE',
                 url: API_URL + 'employees/' + id
-            }).
-                    success(function (data) {
+            }).success(function (data) {
                         console.log(data);
                         $http.get(API_URL + "employees")
                                 .success(function (response) {

@@ -29,7 +29,6 @@ class Employees extends Controller {
      */
     public function store(Request $request) {
         $employee = new Employee;
-
         $employee->name = $request->input('name');
         $employee->email = $request->input('email');
         $employee->contact_number = $request->input('contact_number');
