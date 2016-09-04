@@ -6,9 +6,9 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
             });
 
     //Reset modal form
-   $scope.FromReset = function(){
+    $scope.FromReset = function () {
         $('.modal-body').find("input,textarea,select").val('').end();
-   }
+    }
     //show modal form
     $scope.toggle = function (modalstate, id) {
         $scope.modalstate = modalstate;
@@ -49,12 +49,12 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
         }).success(function (response) {
             console.log(response);
             $('#myModal').modal('hide');
-            $('.modal-body').find("input,textarea,select").val('').end();
+//            console.log($scope.employee);
+            response = null;
             $http.get(API_URL + "employees")
                     .success(function (response) {
                         $scope.employees = response;
                     });
-//            $scope.employee.empty();
 //            location.reload();
         }).error(function (response) {
             console.log(response);
@@ -71,13 +71,13 @@ app.controller('employeesController', function ($scope, API_URL, $http) {
                 method: 'DELETE',
                 url: API_URL + 'employees/' + id
             }).success(function (data) {
-                        console.log(data);
-                        $http.get(API_URL + "employees")
-                                .success(function (response) {
-                                    $scope.employees = response;
-                                });
+                console.log(data);
+                $http.get(API_URL + "employees")
+                        .success(function (response) {
+                            $scope.employees = response;
+                        });
 //                        location.reload();
-                    }).
+            }).
                     error(function (data) {
                         console.log(data);
                         alert('Unable to delete');
